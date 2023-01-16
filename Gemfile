@@ -10,7 +10,14 @@ gem "rails", "~> 7.0.4"
 gem "sprockets-rails"
 
 # pg
-gem "pg", "~> 1.4.4"
+gem "pg", "~> 1.4.5"
+
+group :development, :test do
+  gem 'rspec-rails', '~> 6.0', '>= 6.0.1'
+  gem 'factory_bot', '~> 6.2', '>= 6.2.1'
+  gem 'simplecov', '~> 0.22.0'
+  gem 'faker', '~> 3.1'
+end
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"

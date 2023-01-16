@@ -1,18 +1,18 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: slavik
+  database: project
   pool: 5
   host: localhost
-  username: slavik
+  username: yaroslav
   password: asd1854
 
 test:
   adapter: postgresql
   encoding: unicode
-  database: slavik
+  database: project_test
   pool: 5
-  username: slavik
+  username: yaroslav
   password: asd1854
 
 staging:
