@@ -10,17 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_19_181115) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_20_190913) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
     t.string "country"
-    t.string "locality"
+    t.string "city"
     t.string "street"
-    t.integer "house"
+    t.text "comment"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "cart_products", force: :cascade do |t|
+    t.bigint "cart_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_products_on_cart_id"
+    t.index ["product_id"], name: "index_cart_products_on_product_id"
   end
 
   create_table "carts", force: :cascade do |t|
@@ -32,37 +43,50 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_181115) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
-    t.integer "priority"
+    t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "order_products", force: :cascade do |t|
-    t.integer "amount_ordered"
-    t.bigint "product_id", null: false
-    t.bigint "cart_id", null: false
+  create_table "order_details", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cart_id"], name: "index_order_products_on_cart_id"
-    t.index ["product_id"], name: "index_order_products_on_product_id"
+    t.bigint "address_id", null: false
+    t.bigint "order_id", null: false
+    t.index ["address_id"], name: "index_order_details_on_address_id"
+    t.index ["order_id"], name: "index_order_details_on_order_id"
   end
 
   create_table "orders", force: :cascade do |t|
     t.string "status"
     t.date "ordered_at"
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "product_orders", force: :cascade do |t|
+    t.integer "amount"
+    t.bigint "order_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_product_orders_on_order_id"
+    t.index ["product_id"], name: "index_product_orders_on_product_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.decimal "price"
-    t.integer "amount"
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.integer "position"
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
@@ -74,14 +98,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_19_181115) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "address_id", null: false
-    t.index ["address_id"], name: "index_users_on_address_id"
   end
 
+  add_foreign_key "addresses", "users"
+  add_foreign_key "cart_products", "carts"
+  add_foreign_key "cart_products", "products"
   add_foreign_key "carts", "users"
-  add_foreign_key "order_products", "carts"
-  add_foreign_key "order_products", "products"
+  add_foreign_key "order_details", "addresses"
+  add_foreign_key "order_details", "orders"
   add_foreign_key "orders", "users"
+  add_foreign_key "product_orders", "orders"
+  add_foreign_key "product_orders", "products"
   add_foreign_key "products", "categories"
-  add_foreign_key "users", "addresses"
 end
