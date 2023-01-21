@@ -17,6 +17,7 @@ group :development, :test do
   gem 'factory_bot', '~> 6.2', '>= 6.2.1'
 end
 
+gem 'devise'
 gem 'simplecov', '~> 0.22.0'
 gem 'faker', '~> 3.1'
 # Use the Puma web server [https://github.com/puma/puma]
