@@ -1,6 +1,10 @@
 <div class="sticky overflow-x-auto shadow-md mx-5">
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2">User name</h1>
+        <% if current_user %>
+        	<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2"><%= current_user.first_name %> <%= current_user.last_name %></h1>
+        <% else %>
+        	<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2">User name</h1>
+        <% end %>
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -13,7 +17,7 @@
                     Price
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <span class="sr-only">Edit</span>
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </th>
             </tr>
         </thead>
