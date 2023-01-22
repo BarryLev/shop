@@ -12,13 +12,16 @@
   </head>
 
   <body class="bg-white">
-    <%= render 'layouts/header' %>
-
+    <header>
+      <%= render 'layouts/header' %>
+      <%= render 'layouts/alerts' %>
+    </header>
     <main class="container mx-auto mt-28 px-5 flex">
+    <% if @cart %>
       <%= render 'layouts/cart' %>
+    <% end %>
       <%= yield %>
     </main>
-
-    <%= render 'layouts/footer' %>
+      <%= render 'layouts/footer' %>
   </body>
 </html>
