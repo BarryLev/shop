@@ -8,16 +8,21 @@ export default class extends Controller {
 
   addProduct() {
     let id = "0"
-    let temp = localStorage.getItem('productID')
+    this.#changeItem('productID', id)
+    //console.log(temp.split(','))
+  }
+
+  #changeItem(item, element) {
+
+    let temp = localStorage.getItem(item)
     
-    if (temp.length == id){
-      temp = id
+    if (temp.length == element){
+      temp = element
     }
     else{
-      temp += "," + id
+      temp += "," + element
     }
 
-    localStorage.setItem('productID', temp)
-    //console.log(temp.split(','))
+    localStorage.setItem(item, temp)
   }
 }
