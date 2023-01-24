@@ -10,18 +10,19 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body class="bg-white">
     <header>
       <%= render 'layouts/header' %>
       <%= render 'layouts/alerts' %>
     </header>
     <main class="container mx-auto mt-28 px-5 flex">
-    <% if @cart %>
-      <%= render 'layouts/cart' %>
-    <% end %>
-      <%= yield %>
+        <%= yield %>
     </main>
+      <%= render 'layouts/modal' %>
       <%= render 'layouts/footer' %>
   </body>
 </html>
+
+<script>
+  <% session %>
+</script>

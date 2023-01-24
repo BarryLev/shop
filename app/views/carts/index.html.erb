@@ -17,25 +17,16 @@
                     Price
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    name
-                </th>
-                <td class="px-6 py-4">
-                    category
-                </td>
-                <td class="px-6 py-4">
-                    price
-                </td>
-                <td class="px-6 py-4 text-right">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
+          <% if current_user %>
+            <% @ordered_products.each do |product| %>
+              <%= render partial:'layouts/cart_product', locals: { product: product } %>
+            <% end %>
+          <% end %>
         </tbody>
     </table>
+    <%= link_to 'Go back', root_path, class:'inline-block text-sm px-4 py-2 mx-1 bg-blue-500 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>
 </div>
