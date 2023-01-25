@@ -3,7 +3,7 @@
         <% if current_user %>
         	<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2"><%= current_user.first_name %> <%= current_user.last_name %></h1>
         <% else %>
-        	<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2">User name</h1>
+        	<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2">Unregistered user</h1>
         <% end %>
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -26,5 +26,4 @@
             <% end %>
         </tbody>
     </table>
-    <%= link_to 'Order', home_order_path, class:'inline-block text-sm px-4 py-2 mx-1 bg-blue-500 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>
 </div>
