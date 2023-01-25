@@ -1,9 +1,6 @@
 <%= content_tag(:div, '', data:{
   controller: "local-cart"
 }) do %>
-  <% if current_user %>
-    <%= link_to 'Buy', create_cart_product_path, class:'inline-block text-sm px-4 py-2 mx-1 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>
-  <% end %>
   <%= content_tag(:button, 'Buy', data:{
     action: "click->local-cart#addProduct"
   }, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded") %>

@@ -7,7 +7,7 @@ export default class extends Controller {
   }
 
   addProduct() {
-    this.#changeItem('productID', document.getElementsByClassName("modal")[0].id)
+    // this.#changeItem('productID', document.getElementsByClassName("modal")[0].id)
   }
 
   hideModal() {
