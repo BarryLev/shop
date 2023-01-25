@@ -3,26 +3,29 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="local-cart"
 export default class extends Controller {
   connect() {
-    localStorage.setItem('productID', "")
+    sessionStorage.setItem('productID', "")
   }
 
   addProduct() {
-    let id = "0"
-    this.#changeItem('productID', id)
-    //console.log(temp.split(','))
+    // this.#changeItem('productID', document.getElementsByClassName("modal")[0].id)
+  }
+
+  hideModal() {
+    let modal = document.getElementsByClassName("modal")[0];
+    modal.style.display = "none";
   }
 
   #changeItem(item, element) {
 
-    let temp = localStorage.getItem(item)
+    let temp = sessionStorage.getItem(item)
     
-    if (temp.length == element){
+    if (temp == ""){
       temp = element
     }
     else{
       temp += "," + element
     }
 
-    localStorage.setItem(item, temp)
+    sessionStorage.setItem(item, temp)
   }
 }
