@@ -5,3 +5,14 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+# Category
+# 5.times do |i|
+#   Category.create(name: Faker::Movies::HarryPotter.unique.spell, position: i )
+# end
+
+# Product
+# 10.times do |i|
+#   srand i
+#   Product.create(name: Faker::Lorem.word.unique, price: rand(1000), category_id: rand(5), description: Faker::Lorem.sentence(word_count: 10), position: i)
+# end

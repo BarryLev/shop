@@ -10,17 +10,16 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body class="bg-white">
     <header>
       <%= render 'layouts/header' %>
       <%= render 'layouts/alerts' %>
     </header>
-    <main class="container mx-auto mt-28 px-5 flex">
-    <% if @cart %>
-      <%= render 'layouts/cart' %>
-    <% end %>
-      <%= yield %>
+    <main class="mr-0 px-5 w-7/12 flex items-start justify-between">
+      <%= render 'layouts/sidebar' %>
+      <div class="mt-28">
+        <%= yield %>
+      </div>
     </main>
       <%= render 'layouts/footer' %>
   </body>

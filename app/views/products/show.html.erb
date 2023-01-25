@@ -1,0 +1,4 @@
+<div class="text-sm">Category: <%= @product.category.name %></div>
+<div class="text-5xl"><%= @product.name %></div>
+<div class="text-sm">Description: <%= @product.description %></div>
+<%= button_to 'Buy', add_product_path(id: @product.id), class:'inline-block text-sm px-4 py-2 mx-1 bg-blue-500 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>

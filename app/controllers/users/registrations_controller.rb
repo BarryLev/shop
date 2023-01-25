@@ -5,14 +5,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    user_cart = Cart.create(user_id: current_user.id)
+    session[:product_id].uniq.each do |product_id|
+      CartProduct.create(cart_id: user_cart.id, product_id: product_id)
+    end
+  end
 
   # GET /resource/edit
   # def edit
