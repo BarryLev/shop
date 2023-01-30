@@ -13,7 +13,7 @@ class CartsController < ApplicationController
       CartProduct.create(product_id: params[:id], cart_id: current_user.cart.id)
     else
       if session[:product_id]
-        session[:product_id] << params[:id].to_s  
+        session[:product_id] << " #{params[:id].to_s}"  
       else
         session[:product_id] = [params[:id]][0].to_s
       end

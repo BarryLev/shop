@@ -21,8 +21,10 @@
             </tr>
         </thead>
         <tbody>
-            <% @ordered_products.each do |product| %>
-                <%= render partial:'layouts/cart_product', locals: { product: product } %>
+            <% if @ordered_products %>
+                <% @ordered_products.each do |product| %>
+                    <%= render partial:'layouts/cart_product', locals: { product: product } %>
+                <% end %>
             <% end %>
         </tbody>
     </table>
