@@ -4,7 +4,7 @@
     <span class="font-semibold text-xl tracking-tight">Yaroslav Shop</span>
   </div>
   <div class="flex bg-blue-600">
-    <% unless current_user %>
+    <% if !user_signed_in? %>
       <div>
         <%= link_to 'Sign in', new_user_session_path, class:'inline-block text-sm px-4 py-2 mx-1 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>
       </div>

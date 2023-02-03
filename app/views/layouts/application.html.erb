@@ -12,15 +12,15 @@
   </head>
   <body class="bg-white">
     <header>
-      <%= render 'layouts/header' %>
-      <%= render 'layouts/alerts' %>
+      <%= render 'shared/header' %>
+      <%= render 'shared/alerts' %>
     </header>
     <main class="mr-0 px-5 w-7/12 flex items-start justify-between">
-      <%= render 'layouts/sidebar' %>
+      <%= render 'shared/sidebar' %>
       <div class="mt-28">
         <%= yield %>
       </div>
     </main>
-      <%= render 'layouts/footer' %>
+      <%= render 'shared/footer' %>
   </body>
 </html>
