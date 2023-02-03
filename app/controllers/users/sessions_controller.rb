@@ -15,7 +15,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    product_ids = CartProduct.where(cart_id: current_user.cart.id).pluck(:product_id)
+    product_ids = CartProduct.pluck_product_ids(current_user.cart.id)
     super
     session[:product_id] = product_ids.map(&:to_s)
   end
