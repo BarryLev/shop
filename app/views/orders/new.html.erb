@@ -1,53 +1,35 @@
-<p class="alert bg-red-400"><%= flash.alert %></p>
-<%= form_with model: @order, url: create_order_path, local: true do |form| %>
-  <%= fields_for :order_detail do |f| %>
-    <div class="mb-4">
-        <%= f.label :first_name, class: "block font-bold mb-2 text-gray-700 text-sm" %>
-        <%= f.text_field :first_name,
-                          placeholder: "First name",
-                          class: "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow focus:shadow-outline" %>
-    </div>
-    <div class="mb-4">
-        <%= f.label :last_name, class: "block font-bold mb-2 text-gray-700 text-sm" %>
-        <%= f.text_field :last_name,
-                          placeholder: "Last name",
-                          class: "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow focus:shadow-outline" %>
-    </div>
-    <div class="mb-4">
-        <%= f.label :email, class: "block font-bold mb-2 text-gray-700 text-sm" %>
-        <%= f.email_field :email,
-                          autocomplete: "email",
-                          placeholder: "user@example.com",
-                          class: "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow focus:shadow-outline" %>
-    </div>
+<%= form_with model: @order, url: orders_path, method: :post, local: true do |form| %>
+  <% if user_signed_in? %>
+    <%= render 'orders/signed_form' %>
+  <% else %>
+    <%= render 'orders/form' %>
   <% end %>
-
   <%= form.fields_for :address do |f| %>
     <div class="mb-4">
-        <%= f.label :country, class: "block font-bold mb-2 text-gray-700 text-sm" %>
+        <%= f.label :country, class: "label-primary" %>
         <%= f.text_field :country,
-                          class: "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow focus:shadow-outline" %>
+                          class: "form-primary" %>
     </div>
     <div class="mb-4">
-        <%= f.label :city, class: "block font-bold mb-2 text-gray-700 text-sm" %>
+        <%= f.label :city, class: "label-primary" %>
         <%= f.text_field :city,
-                          class: "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow focus:shadow-outline" %>
+                          class: "form-primary" %>
     </div>
     <div class="mb-4">
-        <%= f.label :street, class: "block font-bold mb-2 text-gray-700 text-sm" %>
+        <%= f.label :street, class: "label-primary" %>
         <%= f.text_field :street,
-                          class: "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow focus:shadow-outline" %>
+                          class: "form-primary" %>
     </div>
     <div class="mb-4">
-        <%= f.label :comment, class: "block font-bold mb-2 text-gray-700 text-sm" %>
+        <%= f.label :comment, class: "label-primary" %>
         <%= f.text_area :comment,
                           rows: 3,
-                          class: "appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow focus:shadow-outline" %>
+                          class: "form-primary" %>
     </div>
   <% end %>
   
   <div class="mb-4">
       <%= form.submit "Submit",
-                    class: "button bg-blue-500 hover:bg-blue-700 font-bold text-white focus:outline-none py-2 px-4 rounded focus:shadow-outline w-full" %>
+                    class: "btn-primary" %>
   </div>
 <% end %>

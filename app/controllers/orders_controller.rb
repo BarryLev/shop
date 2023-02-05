@@ -1,46 +1,43 @@
 class OrdersController < ApplicationController
+  before_action :require_login, only: [:index, :show]
+
   def index
-    if user_signed_in?
-      @orders = collection
-    end
+    @orders = collection
   end
 
   def show
-    if user_signed_in?
-      @order = resource
-      @products = Product.find(@order.product_ids)
-      @address = @order.order_detail.address
-      @total_price = total_price
-    end
+    @order = resource
+    @total_price = total_price
   end
 
   def create
-    initialize_order_and_relations
+    @order = Order.new(status: "Completed", ordered_at: Date.today)
+    @order.build_order_detail(permitted_params_order_detail)
+    @order.order_detail.build_address(permitted_params_address)
     
-    return render :new unless (@order.save && @address.save)
+    if @order.save
+      clear_cart
+      return redirect_back_or_to root_path
+    end
 
-    @order_detail.order_id = @order.id
-    @order_detail.address_id = @address.id
-    
-    initialize_order_product
-
-    return render :new unless @order_detail.save
-
-    clear_cart
-
-    redirect_to root_path
+    render :new
   end
 
-  # Add placeholder for authorized user
   def new
     if user_signed_in?
-      return redirect_to root_path if current_user.get_products_by_id.empty?
+      return redirect_to root_path if current_user.get_product_ids.empty?
     else
-      return redirect_to root_path if session[:product_id].empty?
+      redirect_to root_path if session[:product_id].empty?
     end
   end
 
   private
+
+  def require_login
+    if !user_signed_in?
+      redirect_back_or_to root_path
+    end
+  end
   
   def collection
     current_user.orders
@@ -50,43 +47,19 @@ class OrdersController < ApplicationController
     collection.find(params[:id])
   end
 
-  def initialize_order_and_relations
-    @order = Order.new(status: "Completed", ordered_at: Date.today)
-    @order_detail = OrderDetail.new(permitted_params(:order_detail))
-    @address = Address.new(permitted_params(:address))
-
-    set_user_id_to_address_and_order
+  def permitted_params_order_detail
+    params.require(:order_detail).permit(:first_name, :last_name, :email)
   end
 
-  def initialize_order_product
-    if user_signed_in?
-      product_ids = current_user.get_products_by_id
-    else
-      product_ids = session[:product_id]
-    end
-
-    product_ids.each do |product_id|
-      ProductOrder.create(order_id: @order.id, product_id: product_id, amount: 1)
-    end
-  end
-
-  def permitted_params(req)
-    return params.require(:order_detail).permit(:first_name, :last_name, :email) if req == :order_detail
-    return params.require(:address).permit(:country, :city, :street, :comment) if req == :address
-  end
-
-  def set_user_id_to_address_and_order
-    if user_signed_in?
-      @order.user_id = current_user.id
-      @address.user_id = current_user.id
-    end
+  def permitted_params_address
+    params.require(:address).permit(:country, :city, :street, :comment)
   end
 
   def clear_cart
-    Cart.clear(current_user.cart.id)
+    current_user.cart.clear
   end
 
   def total_price
-    @products.pluck(:price).inject(&:+)
+    @order.products.pluck(:price).inject(&:+)
   end
 end

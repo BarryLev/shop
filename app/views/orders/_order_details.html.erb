@@ -1,0 +1,51 @@
+<table>
+  <thead>
+    <tr>
+      <th scope="col">
+        Order details
+      </th>
+      <th scope="col">
+      </th>
+    </tr>
+  </thead>
+  <tr>
+    <td scope="row">
+      Country
+    </td>
+    <td>
+      <%= order.order_detail.address.country %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      City
+    </td>
+    <td>
+      <%= order.order_detail.address.city %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Street
+    </td>
+    <td>
+      <%= order.order_detail.address.street %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Email
+    </td>
+    <td>
+      <%= order.order_detail.email %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Status
+    </td>
+    <td>
+      <%= order.status %>
+    </td>
+  </tr>
+</table>

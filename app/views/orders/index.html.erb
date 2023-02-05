@@ -1,18 +1,18 @@
-<div class="sticky overflow-x-auto shadow-md mx-5">
-  <% if !@orders.empty? %>  
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+<div class="div-table">
+  <% if @orders.present? %>  
+    <table>
+      <thead>
         <tr>
-          <th scope="col" class="px-6 py-3">
-            Ordered_at
+          <th scope="col">
+            Ordered at
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col">
             View order
           </th>
         </tr>
       </thead>
         <% @orders.each do |order| %>
-          <%= render'orders/shared/order', order: order %>
+          <%= render'orders/order', order: order %>
         <% end %>
     </table>
   <% else %>

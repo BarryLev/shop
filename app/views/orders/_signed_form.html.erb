@@ -1,0 +1,24 @@
+<%= fields_for :order_detail do |f| %>
+  <div class="mb-4">
+      <%= f.label :first_name, class: "label-primary" %>
+      <%= f.text_field :first_name,
+                        value: current_user.first_name,
+                        placeholder: "First name",
+                        class: "form-primary" %>
+  </div>
+  <div class="mb-4">
+      <%= f.label :last_name, class: "label-primary" %>
+      <%= f.text_field :last_name,
+                        value: current_user.last_name,
+                        placeholder: "Last name",
+                        class: "form-primary" %>
+  </div>
+  <div class="mb-4">
+      <%= f.label :email, class: "label-primary" %>
+      <%= f.email_field :email,
+                        value: current_user.email,
+                        autocomplete: "email",
+                        placeholder: "user@example.com",
+                        class: "form-primary" %>
+  </div>
+<% end %>

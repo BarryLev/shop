@@ -1,0 +1,14 @@
+<tr>
+    <td scope="row">
+        <%= product.name %>
+    </td>
+    <td>
+        <%= product.category.name %>
+    </td>
+    <td>
+        <%= product.price %>
+    </td>
+    <td class="text-right">
+      <%= button_to 'Delete', cart_path(product), method: :delete, class:'btn-primary' %>
+    </td>
+</tr>

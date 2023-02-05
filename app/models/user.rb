@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :addresses, dependent: :destroy
   has_many :orders, dependent: :nullify
 
-  def get_products_by_id
-    cart.cart_products.pluck(:product_id)
+  def get_product_ids
+    cart.product_ids
   end
 end
