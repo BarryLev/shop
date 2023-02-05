@@ -1,12 +1,12 @@
-<div class="sticky overflow-x-auto shadow-md mx-5">
-	<% if !@ordered_products.empty? %>
+<div class="div-table">
+	<% if @products.present? %>
 		<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 			<% if user_signed_in? %>
-				<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2"><%= current_user.first_name %> <%= current_user.last_name %></h1>
+				<h1 class="user-name"><%= current_user.first_name %> <%= current_user.last_name %></h1>
 			<% else %>
-				<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2">Unregistered user</h1>
+				<h1 class="user-name">Unregistered user</h1>
 			<% end %>
-			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+			<thead class="text-xs">
 				<tr>
 					<th scope="col" class="px-6 py-3">
 						Product name
@@ -22,8 +22,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% @ordered_products.each do |product| %>
-					<%= render 'carts/shared/cart_product', product: product %>
+				<% @products.each do |product| %>
+					<%= render 'carts/cart_product', product: product %>
 				<% end %>
 			</tbody>
 		</table>

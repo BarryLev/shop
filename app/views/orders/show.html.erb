@@ -1,15 +1,15 @@
-<div class="sticky overflow-x-auto shadow-md mx-5 flex">
+<div class="div-table flex">
   <div class="border-r-4 border-black">
-    <% @products.each_with_index do |product, i| %>
-      <%= render 'orders/shared/product', product: product, i: i %>
+    <% @order.products.each_with_index do |product, i| %>
+      <%= render 'orders/product', product: product, i: i %>
     <% end %>
-    <table class="w-full text-sm text-left text-white dark:text-white">
-      <thead class="text-sm text-white uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
+    <table>
+      <thead>
         <tr>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col" class="text-base">
             Total price:
           </th>
-          <th scope="col" class="px-6 py-3">
+          <th scope="col">
             <%= @total_price %>
           </th>
         </tr>
@@ -17,6 +17,6 @@
     </table>     
   </div>
   <div>
-    <%= render 'orders/shared/order_details', order: @order %>
+    <%= render 'orders/order_details', order: @order %>
   </div>
 </div>

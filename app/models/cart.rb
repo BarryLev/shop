@@ -3,5 +3,11 @@ class Cart < ApplicationRecord
   has_many :cart_products, dependent: :destroy
   has_many :products, through: :cart_products
 
-  scope :clear, -> (cart_id) { find(cart_id).cart_products.destroy_all }
+  def clear
+    cart_products.destroy_all
+  end
+
+  def destroy_product(product_id)
+  cart_products.find(product_id).destroy
+  end
 end

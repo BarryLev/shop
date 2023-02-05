@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
-    @products = get_products
-    @categories = collection_category
+    @products = products
+    @categories = category_collection
   end
   
   def show
@@ -10,16 +10,16 @@ class ProductsController < ApplicationController
 
   private
 
-  def get_products
-    return collection_product.with_category(params[:id]) if params[:id]
-    collection_product
+  def products
+    return product_collection.with_category(params[:id]) if params[:id]
+    product_collection
   end
 
-  def collection_product
+  def product_collection
     Product.sorted_by_position
   end
 
-  def collection_category
+  def category_collection
     Category.sorted_by_position
   end
 
