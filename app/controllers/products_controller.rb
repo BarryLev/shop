@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
   private
 
   def products
-    return product_collection.with_category(params[:id]) if params[:id]
+    return product_collection.by_category(params[:id]) if params[:id]
     product_collection
   end
 

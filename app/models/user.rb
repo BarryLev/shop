@@ -6,8 +6,4 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   has_many :addresses, dependent: :destroy
   has_many :orders, dependent: :nullify
-
-  def get_product_ids
-    cart.product_ids
-  end
 end

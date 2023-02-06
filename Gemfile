@@ -81,3 +81,5 @@ group :test do
 end
 
 gem "simple_form", "~> 5.2"
+
+gem "inline_svg", "~> 1.8"

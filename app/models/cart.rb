@@ -6,8 +6,4 @@ class Cart < ApplicationRecord
   def clear
     cart_products.destroy_all
   end
-
-  def destroy_product(product_id)
-  cart_products.find(product_id).destroy
-  end
 end
