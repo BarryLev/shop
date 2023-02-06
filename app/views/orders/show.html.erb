@@ -1,7 +1,7 @@
 <div class="div-table flex">
   <div class="border-r-4 border-black">
     <% @order.products.each_with_index do |product, i| %>
-      <%= render 'orders/product', product: product, i: i %>
+      <%= render 'orders/product', product: product, number: (i+1) %>
     <% end %>
     <table>
       <thead>
@@ -10,13 +10,13 @@
             Total price:
           </th>
           <th scope="col">
-            <%= @total_price %>
+            <%= @order.total_price %>
           </th>
         </tr>
       </thead>
     </table>     
   </div>
   <div>
-    <%= render 'orders/order_details', order: @order %>
+    <%= render 'orders/order_details', details: @order.order_detail %>
   </div>
 </div>

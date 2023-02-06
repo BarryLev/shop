@@ -5,5 +5,5 @@ class Product < ApplicationRecord
   has_many :orders, through: :order_products, dependent: :destroy
 
   scope :sorted_by_position, -> { order(:position) }
-  scope :with_category, -> (category) { where(category_id: category) }
+  scope :by_category, -> (category) { where(category_id: category) }
 end

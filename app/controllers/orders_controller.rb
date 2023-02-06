@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :require_login, only: [:index, :show]
+  before_action :authenticate_user!, only: [:index, :show]
 
   def index
     @orders = collection
@@ -7,15 +7,16 @@ class OrdersController < ApplicationController
 
   def show
     @order = resource
-    @total_price = total_price
   end
 
   def create
     @order = Order.new(status: "Completed", ordered_at: Date.today)
-    @order.build_order_detail(permitted_params_order_detail)
-    @order.order_detail.build_address(permitted_params_address)
-    
-    if @order.save
+    @order.build_order_detail(order_params)
+    @order.order_detail.build_address(address_params)
+
+    @order.user_id = current_user.id if user_signed_in?
+
+    if @order.save!
       clear_cart
       return redirect_back_or_to root_path
     end
@@ -25,19 +26,13 @@ class OrdersController < ApplicationController
 
   def new
     if user_signed_in?
-      return redirect_to root_path if current_user.get_product_ids.empty?
+      return redirect_to root_path if current_user.cart.product_ids.empty?
     else
-      redirect_to root_path if session[:product_id].empty?
+      redirect_to root_path if session[:product_id].blank?
     end
   end
 
   private
-
-  def require_login
-    if !user_signed_in?
-      redirect_back_or_to root_path
-    end
-  end
   
   def collection
     current_user.orders
@@ -47,19 +42,15 @@ class OrdersController < ApplicationController
     collection.find(params[:id])
   end
 
-  def permitted_params_order_detail
+  def order_params
     params.require(:order_detail).permit(:first_name, :last_name, :email)
   end
 
-  def permitted_params_address
+  def address_params
     params.require(:address).permit(:country, :city, :street, :comment)
   end
 
   def clear_cart
     current_user.cart.clear
-  end
-
-  def total_price
-    @order.products.pluck(:price).inject(&:+)
   end
 end

@@ -1,5 +1,5 @@
 <div class="div-table">
-  <% if @orders.present? %>  
+  <% if @orders.exists? %>  
     <table>
       <thead>
         <tr>
@@ -11,9 +11,7 @@
           </th>
         </tr>
       </thead>
-        <% @orders.each do |order| %>
-          <%= render'orders/order', order: order %>
-        <% end %>
+      <%= render @orders %>
     </table>
   <% else %>
     <p>You have no orders</p>

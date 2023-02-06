@@ -2,24 +2,31 @@
   .div-table{
     @apply sticky overflow-x-auto shadow-md mx-5 block
   }
+  
   table{
     @apply w-full text-sm text-left text-gray-500 dark:text-gray-400
   }
+  
   thead{
     @apply text-sm text-white bg-gray-50 dark:bg-gray-700 dark:text-white
   }
+  
   tr{
     @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600
   }
+  
   th{
     @apply px-6 py-4 bg-gray-700 font-medium text-gray-900 whitespace-nowrap dark:text-white
   }
+  
   .user-name{
     @apply px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2
   }
+  
   td{
     @apply px-6 py-4
   }
+  
   td:first-child{
     @apply font-medium text-gray-900 whitespace-nowrap dark:text-white
   }
