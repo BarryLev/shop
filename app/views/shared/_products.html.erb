@@ -1,0 +1,20 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">
+          Product name
+        </th>
+        <th scope="col">
+          Price
+        </th>
+        <th scope="col">
+          View product
+        </th>
+      </tr>
+    </thead>
+    <% products.each do |product| %>
+      <%= render 'products/product', product: product %>
+    <% end %>
+  </table>
+</div>
