@@ -3,8 +3,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  
-  resources :orders, :carts, :products
+
+  resources :orders, :products
+  resource :carts
+  resource :category, only: :show
 
   root 'products#index'
 end

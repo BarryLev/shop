@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :show]
+  before_action :cart_empty, only: :new
 
   def index
     @orders = collection
@@ -10,29 +11,39 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(status: "Completed", ordered_at: Date.today)
-    @order.build_order_detail(order_params)
+    @order = Order.new(ordered_at: Date.today, user_id: current_user&.id)
+    @order.build_order_detail(order_detail_params)
     @order.order_detail.build_address(address_params)
 
-    @order.user_id = current_user.id if user_signed_in?
-
-    if @order.save!
+    if @order.save
       clear_cart
-      return redirect_back_or_to root_path
+      redirect_to root_path
+    else
+      render :new
     end
-
-    render :new
   end
 
   def new
-    if user_signed_in?
-      return redirect_to root_path if current_user.cart.product_ids.empty?
-    else
-      redirect_to root_path if session[:product_id].blank?
-    end
+    @order = Order.new
+    @order.build_order_detail
+    @order.order_detail.build_address
   end
 
   private
+
+  def cart_empty
+    if cart_empty?
+      flash[:error] = "Your cart is empty, you can't place your order"
+      redirect_to root_path
+    end
+  end
+
+  def cart_empty?
+    user_cart_empty = user_signed_in? && current_user.cart.product_ids.empty?
+    local_cart_empty = !user_signed_in? && session[:product_id].blank?
+    
+    user_cart_empty || local_cart_empty
+  end
   
   def collection
     current_user.orders
@@ -42,12 +53,12 @@ class OrdersController < ApplicationController
     collection.find(params[:id])
   end
 
-  def order_params
-    params.require(:order_detail).permit(:first_name, :last_name, :email)
+  def order_detail_params
+    params[:order].require(:order_detail).permit(:first_name, :last_name, :email)
   end
 
   def address_params
-    params.require(:address).permit(:country, :city, :street, :comment)
+    params.dig(:order, :order_detail).require(:address).permit(:country, :city, :street, :comment)
   end
 
   def clear_cart

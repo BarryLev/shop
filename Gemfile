@@ -83,3 +83,5 @@ end
 gem "simple_form", "~> 5.2"
 
 gem "inline_svg", "~> 1.8"
+
+gem "country_select", "~> 8.0"

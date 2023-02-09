@@ -1,41 +1,17 @@
-<%= form_with model: @order, url: orders_path, method: :post, local: true do |form| %>
-  <%= fields_for :order_detail do |f| %>
+<%= simple_form_for @order do |form| %>
+  <%= form.simple_fields_for :order_detail do |f| %>
     <% if user_signed_in? %>
-      <%= render 'orders/signed_form', f: f %>
-    <% else %>
+      <%= render 'orders/signed_form', f: f %>  
+    <% elsif %>
       <%= render 'orders/form', f: f %>
     <% end %>
-  <% end %>
 
-  <%= form.fields_for :address do |f| %>
-    <div class="mb-4 flex">
-        <%= f.label :country, class: "label-primary" %>
-        <%= f.text_field :country,
-                          class: "form-primary" %>
-    </div>
-    
-    <div class="mb-4 flex">
-        <%= f.label :city, class: "label-primary" %>
-        <%= f.text_field :city,
-                          class: "form-primary" %>
-    </div>
-    
-    <div class="mb-4 flex">
-        <%= f.label :street, class: "label-primary" %>
-        <%= f.text_field :street,
-                          class: "form-primary" %>
-    </div>
-    
-    <div class="mb-4 flex">
-        <%= f.label :comment, class: "label-primary" %>
-        <%= f.text_area :comment,
-                          rows: 3,
-                          class: "form-primary" %>
-    </div>
+    <%= f.simple_fields_for :address do |ff| %>
+      <%= ff.input :country, priority: ["UA"] %>
+      <%= ff.input :city %>
+      <%= ff.input :street %>
+      <%= ff.input :comment, as: :text %>
+    <% end %>
   <% end %>
-  
-  <div class="mb-4 flex">
-      <%= form.submit "Submit",
-                    class: "btn-primary" %>
-  </div>
+  <%= form.button :submit, class: 'btn-primary' %>
 <% end %>

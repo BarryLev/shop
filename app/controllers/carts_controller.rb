@@ -1,12 +1,11 @@
 class CartsController < ApplicationController
   def show
-    @products = collection
+    @cart = resource
   end
 
   def destroy
-    binding.pry
     if user_signed_in?
-      current_user.cart.cart_products.find_by(product_id: params[:id]).destroy
+      current_user.cart.products.destroy(params[:id])
     else
       session[:product_id].delete(params[:id])
     end
@@ -14,9 +13,8 @@ class CartsController < ApplicationController
   end
 
   def update
-    binding.pry
     if user_signed_in?
-      CartProduct.create(product_id: params[:id], cart_id: current_user.cart.id)
+      current_user.cart.products << Product.find(params[:id])
     else
       store_product
     end
@@ -25,11 +23,13 @@ class CartsController < ApplicationController
 
   private
 
-  def collection
+  def resource
     if user_signed_in?
-      return Cart.find_by(user_id: current_user.id).products
-    elsif session[:product_id]
-      Product.find(session[:product_id])
+      current_user.cart
+    elsif session[:product_id].present?
+      cart = Cart.new
+      cart.products << Product.find(session[:product_id])
+      cart
     end
   end
 

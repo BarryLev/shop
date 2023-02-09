@@ -1,5 +1,5 @@
 <div class="div-table">
-	<% if @products.present? %>
+	<% if @cart.products.present? %>
 		<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 			<% if user_signed_in? %>
 				<p class="user-name"><%= current_user.first_name %> <%= current_user.last_name %></h1>
@@ -22,7 +22,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% @products.each do |product| %>
+				<% @cart.products.each do |product| %>
 					<%= render 'carts/cart_product', product: product %>
 				<% end %>
 			</tbody>
