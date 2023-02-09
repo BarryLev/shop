@@ -6,21 +6,21 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <script src="http://cdn.tailwindcss.com"></script>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
   <body class="bg-white">
     <header>
-      <%= render 'layouts/header' %>
-      <%= render 'layouts/alerts' %>
+      <%= render 'shared/header' %>
+      <%= render 'shared/alerts' %>
+      <%= render 'shared/order_alert' %>
     </header>
     <main class="mr-0 px-5 w-7/12 flex items-start justify-between">
-      <%= render 'layouts/sidebar' %>
+      <%= render 'shared/sidebar' %>
       <div class="mt-28">
         <%= yield %>
       </div>
     </main>
-      <%= render 'layouts/footer' %>
+      <%= render 'shared/footer' %>
   </body>
 </html>

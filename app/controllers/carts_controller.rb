@@ -1,32 +1,43 @@
 class CartsController < ApplicationController
   def show
-    if current_user
-      products_ids = current_user.cart.cart_products.pluck(:product_id)
-      @ordered_products = Product.where(id: products_ids)
-    elsif session[:product_id]
-      @ordered_products = Product.where(id: session[:product_id])
-    end
+    @cart = resource
   end
 
-  def create
-    if current_user
-      CartProduct.create(product_id: params[:id], cart_id: current_user.cart.id)
+  def destroy
+    if user_signed_in?
+      current_user.cart.products.destroy(params[:id])
     else
-      if session[:product_id]
-        session[:product_id] << " #{params[:id].to_s}"  
-      else
-        session[:product_id] = [params[:id]][0].to_s
-      end
+      session[:product_id].delete(params[:id])
+    end
+    redirect_to carts_path
+  end
+
+  def update
+    if user_signed_in?
+      current_user.cart.products << Product.find(params[:id])
+    else
+      store_product
     end
     redirect_to root_path
   end
 
-  def destroy
-    if current_user
-      CartProduct.find_by(product_id: params[:id], cart_id: current_user.cart.id).destroy
-    else
-      session[:product_id].delete(params[:id])
+  private
+
+  def resource
+    if user_signed_in?
+      current_user.cart
+    elsif session[:product_id].present?
+      cart = Cart.new
+      cart.products << Product.find(session[:product_id])
+      cart
     end
-    redirect_to get_cart_path
+  end
+
+  def store_product
+    if session[:product_id].blank?
+      session[:product_id] << params[:id].to_s  
+    else
+      session[:product_id] = [params[:id].to_s]
+    end
   end
 end

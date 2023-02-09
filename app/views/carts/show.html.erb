@@ -1,31 +1,33 @@
-<div class="sticky overflow-x-auto shadow-md mx-5">
-    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <% if current_user %>
-        	<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2"><%= current_user.first_name %> <%= current_user.last_name %></h1>
-        <% else %>
-        	<h1 class="px-6 py-3 text-5xl text-center dark:bg-gray-600 border-black border-2">Unregistered user</h1>
-        <% end %>
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Product name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Category
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Price
-                </th>
-                <th scope="col" class="px-6 py-3">
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if @ordered_products %>
-                <% @ordered_products.each do |product| %>
-                    <%= render partial:'layouts/cart_product', locals: { product: product } %>
-                <% end %>
-            <% end %>
-        </tbody>
-    </table>
+<div class="div-table">
+	<% if @cart.products.present? %>
+		<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+			<% if user_signed_in? %>
+				<p class="user-name"><%= current_user.first_name %> <%= current_user.last_name %></h1>
+			<% else %>
+				<p class="user-name">Unregistered user</h1>
+			<% end %>
+			<thead class="text-xs">
+				<tr>
+					<th scope="col" class="px-6 py-3">
+						Product name
+					</th>
+					<th scope="col" class="px-6 py-3">
+						Category
+					</th>
+					<th scope="col" class="px-6 py-3">
+						Price
+					</th>
+						<th scope="col" class="px-6 py-3">
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @cart.products.each do |product| %>
+					<%= render 'carts/cart_product', product: product %>
+				<% end %>
+			</tbody>
+		</table>
+	<% else %>
+		<p>Cart has no products, let's discover our shop!</p>
+	<% end %>
 </div>

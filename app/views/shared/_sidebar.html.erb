@@ -1,0 +1,42 @@
+<aside class="w-64" aria-label="Sidebar">
+   <div class="sider-list">
+      <ul class="space-y-2">
+        <li>
+          <%= link_to 'Home', root_path, class:'btn-sidebar' %>
+        </li>
+        <li>
+          <%= link_to 'Cart', carts_path, class:'btn-sidebar' %>          
+        </li>
+        <li class="w-full">
+          <button type="button" class="btn-sidebar w-full" aria-controls="dropdown-orders" data-collapse-toggle="dropdown-orders">
+            <span class="flex-1 text-left whitespace-nowrap" sidebar-toggle-item>Orders</span>
+            <%= inline_svg_tag "dropdown.svg" %>
+          </button>
+          <ul id="dropdown-orders" class="hidden py-2 space-y-2">
+            <% if user_signed_in? %>
+              <li>
+                <%= link_to 'Check previous orders', orders_path, class:'btn-sidebar ml-2' %>
+              </li>
+            <% end %>
+            <li>
+              <%= link_to 'Place an order', new_order_path, class:'btn-sidebar ml-2' %>
+            </li>
+          </ul>
+        </li>
+        <% if @categories.present? %>
+          <li>
+            <button type="button" class="btn-sidebar w-full" aria-controls="dropdown-category" data-collapse-toggle="dropdown-category">
+              <span class="flex-1 text-left whitespace-nowrap" sidebar-toggle-item>Category</span>
+              <%= inline_svg_tag "dropdown.svg" %>
+            </button>
+            <ul id="dropdown-category" class="hidden py-2 space-y-2">
+              <% @categories.each do |category| %>
+                <%= render 'shared/category', category: category %>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+   </div>
+   <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
+</aside>

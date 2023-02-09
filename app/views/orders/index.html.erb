@@ -1,0 +1,19 @@
+<div class="div-table">
+  <% if @orders.exists? %>  
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">
+            Ordered at
+          </th>
+          <th scope="col">
+            View order
+          </th>
+        </tr>
+      </thead>
+      <%= render @orders %>
+    </table>
+  <% else %>
+    <p>You have no orders</p>
+  <% end %>
+</div>
