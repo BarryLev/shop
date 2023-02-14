@@ -9,7 +9,7 @@ class CartsController < ApplicationController
     else
       session[:product_id].delete(params[:id])
     end
-    redirect_to carts_path
+    redirect_to cart_path
   end
 
   def update
@@ -34,10 +34,10 @@ class CartsController < ApplicationController
   end
 
   def store_product
-    if session[:product_id].blank?
-      session[:product_id] << params[:id].to_s  
+    if session[:product_id].present?
+      session[:product_id] << params[:id]  
     else
-      session[:product_id] = [params[:id].to_s]
+      session[:product_id] = [params[:id]]
     end
   end
 end

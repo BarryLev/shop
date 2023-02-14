@@ -16,7 +16,12 @@ class OrdersController < ApplicationController
     @order.order_detail.build_address(address_params)
 
     if @order.save
-      clear_cart
+      if user_signed_in?
+        @order.products << current_user.cart.products.destroy_all
+      else
+        @order.products << Product.find(session[:product_id])
+        session[:product_id].clear
+      end
       redirect_to root_path
     else
       render :new
@@ -32,17 +37,10 @@ class OrdersController < ApplicationController
   private
 
   def cart_empty
-    if cart_empty?
+    if helpers.cart_empty?
       flash[:error] = "Your cart is empty, you can't place your order"
       redirect_to root_path
     end
-  end
-
-  def cart_empty?
-    user_cart_empty = user_signed_in? && current_user.cart.product_ids.empty?
-    local_cart_empty = !user_signed_in? && session[:product_id].blank?
-    
-    user_cart_empty || local_cart_empty
   end
   
   def collection
@@ -54,14 +52,18 @@ class OrdersController < ApplicationController
   end
 
   def order_detail_params
-    params[:order].require(:order_detail).permit(:first_name, :last_name, :email)
+    if user_signed_in?
+      {
+        first_name: current_user.first_name,
+        last_name: current_user.last_name,
+        email: current_user.email
+      }
+    else
+      params[:order].require(:order_detail).permit(:first_name, :last_name, :email)
+    end
   end
 
   def address_params
     params.dig(:order, :order_detail).require(:address).permit(:country, :city, :street, :comment)
-  end
-
-  def clear_cart
-    current_user.cart.clear
   end
 end

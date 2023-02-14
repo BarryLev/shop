@@ -1,5 +1,9 @@
-<% if notice %>
+<% if notice.present? %>
   <p class="notice bg-green-400"><%= notice %></p>
-<% elsif alert %>
+<% elsif alert.present? %>
   <p class="alert bg-red-400"><%= alert %></p>
+<% end %>
+
+<% if flash[:error].present? %>
+  <p class="alert bg-red-400"><%= flash[:error] %></p>
 <% end %>

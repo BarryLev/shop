@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
     @products = collection
-    @categories = Category.sorted_by_position
+    @categories = category_collection
   end
   
   def show
@@ -12,6 +12,10 @@ class ProductsController < ApplicationController
 
   def collection
     Product.sorted_by_position
+  end
+
+  def category_collection
+    Category.sorted_by_position
   end
 
   def resource

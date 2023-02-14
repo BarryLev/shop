@@ -1,8 +1,6 @@
 <%= simple_form_for @order do |form| %>
   <%= form.simple_fields_for :order_detail do |f| %>
-    <% if user_signed_in? %>
-      <%= render 'orders/signed_form', f: f %>  
-    <% elsif %>
+    <% if !user_signed_in? %>
       <%= render 'orders/form', f: f %>
     <% end %>
 

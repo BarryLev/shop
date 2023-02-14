@@ -1,7 +1,7 @@
 <div class="div-table flex">
   <div class="border-r-4 border-black">
-    <% @order.products.each_with_index do |product, i| %>
-      <%= render 'orders/product', product: product, number: (i+1) %>
+    <% @order.products.each do |product| %>
+      <%= render 'orders/product', product: product %>
     <% end %>
     <table>
       <thead>

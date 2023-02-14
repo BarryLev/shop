@@ -4,9 +4,8 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :orders, :products
-  resource :carts
-  resource :category, only: :show
+  resources :orders, :products, :categories
+  resource :cart, only: [:show, :destroy, :update]
 
   root 'products#index'
 end
