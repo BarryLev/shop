@@ -1,14 +1,14 @@
 <%= simple_form_for @order do |form| %>
-  <%= form.simple_fields_for :order_detail do |f| %>
+  <%= form.simple_fields_for :order_detail do |order_detail_form| %>
     <% if !user_signed_in? %>
-      <%= render 'orders/form', f: f %>
+      <%= render 'orders/fields', f: order_detail_form %>
     <% end %>
 
-    <%= f.simple_fields_for :address do |ff| %>
-      <%= ff.input :country, priority: ["UA"] %>
-      <%= ff.input :city %>
-      <%= ff.input :street %>
-      <%= ff.input :comment, as: :text %>
+    <%= order_detail_form.simple_fields_for :address do |address_form| %>
+      <%= address_form.input :country, priority: ["UA"] %>
+      <%= address_form.input :city %>
+      <%= address_form.input :street %>
+      <%= address_form.input :comment, as: :text %>
     <% end %>
   <% end %>
   <%= form.button :submit, class: 'btn-primary' %>

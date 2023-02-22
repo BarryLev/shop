@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :show]
-  before_action :cart_empty, only: :new
+  before_action :check_products_presence, only: :new
 
   def index
     @orders = collection
@@ -11,17 +11,15 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(ordered_at: Date.today, user_id: current_user&.id)
-    @order.build_order_detail(order_detail_params)
-    @order.order_detail.build_address(address_params)
+    if user_signed_in?
+      @order = Order.new(order_params.merge(user_id: current_user.id, product_ids: current_user.cart.products.destroy_all.pluck(:id)))
+      @order.order_detail.add_details(get_user_details)
+    else
+      @order = Order.new(order_params.merge(product_ids: session[:product_id]))
+      session[:product_id].clear
+    end
 
-    if @order.save
-      if user_signed_in?
-        @order.products << current_user.cart.products.destroy_all
-      else
-        @order.products << Product.find(session[:product_id])
-        session[:product_id].clear
-      end
+    if @order.save!
       redirect_to root_path
     else
       render :new
@@ -36,10 +34,18 @@ class OrdersController < ApplicationController
 
   private
 
-  def cart_empty
-    if helpers.cart_empty?
-      flash[:error] = "Your cart is empty, you can't place your order"
+  def check_products_presence
+    if cart_empty?
+      flash[:warning] = "Your cart is empty, you can't place your order"
       redirect_to root_path
+    end
+  end
+
+  def cart_empty?
+    if user_signed_in?
+      current_user.cart.product_ids.empty?
+    else
+      session[:product_id].blank?
     end
   end
   
@@ -51,19 +57,19 @@ class OrdersController < ApplicationController
     collection.find(params[:id])
   end
 
-  def order_detail_params
-    if user_signed_in?
-      {
-        first_name: current_user.first_name,
-        last_name: current_user.last_name,
-        email: current_user.email
-      }
-    else
-      params[:order].require(:order_detail).permit(:first_name, :last_name, :email)
-    end
+  def order_params
+    params.require(:order).permit(
+      order_detail_attributes: [:first_name, :last_name, :email,
+        address_attributes: [:country, :city, :street, :comment]
+      ]
+    )
   end
 
-  def address_params
-    params.dig(:order, :order_detail).require(:address).permit(:country, :city, :street, :comment)
+  def get_user_details
+    {
+      first_name: current_user.first_name,
+      last_name: current_user.last_name,
+      email: current_user.email
+    }
   end
 end

@@ -6,4 +6,8 @@ class User < ApplicationRecord
   has_one :cart, dependent: :destroy
   has_many :addresses, dependent: :destroy
   has_many :orders, dependent: :nullify
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 end

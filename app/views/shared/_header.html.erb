@@ -7,14 +7,14 @@
     <div class="flex bg-blue-600">
       <% if !user_signed_in? %>
         <div>
-          <%= link_to 'Sign in', new_user_session_path, class:'inline-block text-sm px-4 py-2 mx-1 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>
+          <%= link_to 'Sign in', new_user_session_path, class:'btn-session' %>
         </div>
         <div>
-          <%= link_to 'Sign up', new_user_registration_path, class:'inline-block text-sm px-4 py-2 mx-1 leading-none border rounded bg-emerald-700 text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>
+          <%= link_to 'Sign up', new_user_registration_path, class:'btn-registration' %>
         </div>
       <% else %>
         <div>
-          <%= button_to 'Sign out', destroy_user_session_path, method: :delete, class:'inline-block text-sm px-4 py-2 mx-1 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0' %>
+          <%= button_to 'Sign out', destroy_user_session_path, method: :delete, class:'btn-session' %>
         </div>
       <% end %>
     </div>

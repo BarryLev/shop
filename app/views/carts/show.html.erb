@@ -1,10 +1,10 @@
 <div class="div-table">
-	<% if @cart&.products.present? %>
+	<% if @products.present? %>
 		<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
 			<% if user_signed_in? %>
-				<p class="user-name"><%= current_user.first_name %> <%= current_user.last_name %></h1>
+				<p class="user-name"><%= current_user.name %></p>
 			<% else %>
-				<p class="user-name">Unregistered user</h1>
+				<p class="user-name">Unregistered user</p>
 			<% end %>
 			<thead class="text-xs">
 				<tr>
@@ -22,8 +22,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<% @cart.products.each do |product| %>
-					<%= render 'carts/cart_product', product: product %>
+				<% @products.each do |product| %>
+					<%= render 'carts/product', product: product %>
 				<% end %>
 			</tbody>
 		</table>

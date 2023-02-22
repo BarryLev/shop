@@ -1,21 +1,24 @@
 @layer base {
-  footer{
+  footer {
     @apply p-4 bg-white shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 bottom-0 fixed w-full
   }
 
-  .footer-text{
+  .footer-text {
     @apply text-sm text-gray-500 sm:text-center dark:text-gray-400
   }
 
-  nav{
+  nav {
     @apply flex items-center justify-between flex-wrap bg-blue-600 p-6
   }
 
-  .logo{
+  .logo {
     @apply flex items-center flex-shrink-0 text-white mr-6
   }
 
-  .sider-list{
+  .sider-list {
     @apply px-3 py-4 overflow-y-auto rounded bg-gray-50 dark:bg-gray-800
+  }
+  .dropdown-text {
+    @apply flex-1 text-left whitespace-nowrap pointer-events-none
   }
 }

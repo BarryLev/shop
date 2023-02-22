@@ -14,7 +14,7 @@
     <%= render 'shared/header' %>
 
     <main class="mr-0 px-5 w-7/12 flex items-start justify-between">
-      <%= render 'shared/sidebar' %>
+      <%= render 'shared/sidebar', categories: @categories %>
       <div class="mt-28">
         <%= yield %>
       </div>

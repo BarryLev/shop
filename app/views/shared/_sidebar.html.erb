@@ -8,10 +8,14 @@
           <%= link_to 'Cart', cart_path, class:'btn-sidebar' %>          
         </li>
         <li class="w-full">
-          <button type="button" class="btn-sidebar w-full" aria-controls="dropdown-orders" data-collapse-toggle="dropdown-orders">
-            <span class="flex-1 text-left whitespace-nowrap" sidebar-toggle-item>Orders</span>
-            <%= inline_svg "dropdown.svg" %>
-          </button>
+
+          <%= content_tag(:div, "", data: { controller: "dropdown" }) do %>
+            <%= content_tag(:button, "", id: "orders", class: "btn-sidebar w-full", data: { action: "click->dropdown#toggle" }) do %>
+              <span class="dropdown-text" sidebar-toggle-item>Orders</span>
+              <%= inline_svg "dropdown.svg" %>
+            <% end %>
+          <% end %>
+
           <ul id="dropdown-orders" class="hidden py-2 space-y-2">
             <% if user_signed_in? %>
               <li>
@@ -23,14 +27,17 @@
             </li>
           </ul>
         </li>
-        <% if @categories.present? %>
+        <% if categories.present? %>
           <li>
-            <button type="button" class="btn-sidebar w-full" aria-controls="dropdown-category" data-collapse-toggle="dropdown-category">
-              <span class="flex-1 text-left whitespace-nowrap" sidebar-toggle-item>Category</span>
-              <%= inline_svg "dropdown.svg" %>
-            </button>
-            <ul id="dropdown-category" class="hidden py-2 space-y-2">
-              <% @categories.each do |category| %>
+            <%= content_tag(:div, "", data: { controller: "dropdown" }) do %>
+              <%= content_tag(:button, "", id: "categories", class: "btn-sidebar w-full", data: { action: "click->dropdown#toggle" }) do %>
+                <span class="dropdown-text" sidebar-toggle-item>Category</span>
+                <%= inline_svg "dropdown.svg" %>
+              <% end %>
+            <% end %>
+
+            <ul id="dropdown-categories" class="hidden py-2 space-y-2">
+              <% categories.each do |category| %>
                 <%= render 'shared/category', category: category %>
               <% end %>
             </ul>
@@ -38,5 +45,4 @@
         <% end %>
       </ul>
    </div>
-   <script src="https://unpkg.com/flowbite@1.5.1/dist/flowbite.js"></script>
 </aside>

@@ -6,9 +6,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     super
-    user_cart = Cart.create(user_id: current_user.id)
-    session[:product_id].uniq.each do |product_id|
-      CartProduct.create(cart_id: user_cart.id, product_id: product_id)
+    if user_signed_in?
+      user_cart = Cart.create(user_id: current_user.id)
+      if session[:product_id].present?
+        session[:product_id].uniq.each do |product_id|
+          CartProduct.create(cart_id: user_cart.id, product_id: product_id)
+        end
+      end
     end
   end
 
